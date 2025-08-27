@@ -6,15 +6,14 @@
     "description": "API documentation for Enigma Genomics integration endpoints."
   },
   "servers": [
-      {
+    {
       "url": "https://api.enigmagenomics.com/us-central1/v3external",
       "description": "Production server"
-      },
-      {
+    },
+    {
       "url": "http://localhost:5001/enigmagenomics/us-central1/v3external",
       "description": "Local emulator"
-      }
-
+    }
   ],
   "components": {
     "securitySchemes": {
@@ -31,119 +30,47 @@
     }
   ],
   "paths": {
-    "/products": {
+    "/orders/{page}/{records}": {
       "get": {
-        "summary": "Get all products (tests) and pricing",
-        "tags": ["Products"],
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of products",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": { "type": "string" },
-                    "message": { "type": "string" },
-                    "data": {
-                      "type": "array",
-                      "items": { "type": "object" }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/payment/{product_code}": {
-      "get": {
-        "summary": "Initiate payment for a product",
-        "tags": ["Payments"],
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "product_code",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          },
-          {
-            "name": "uid",
-            "in": "query",
-            "required": true,
-            "schema": { "type": "string" }
-          },
-          {
-            "name": "company",
-            "in": "query",
-            "required": true,
-            "schema": { "type": "string" }
-          },
-          {
-            "name": "lang",
-            "in": "query",
-            "required": true,
-            "schema": { "type": "string" }
-          },
-          {
-            "name": "currency",
-            "in": "query",
-            "required": true,
-            "schema": { "type": "string" }
-          },
-          {
-            "name": "amount",
-            "in": "query",
-            "required": true,
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Payment link generated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": { "type": "string" },
-                    "message": { "type": "string" },
-                    "paymentLink": { "type": "string" }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/order/{oid}": {
-      "get": {
-        "summary": "Get order details",
+        "summary": "Get paginated list of orders",
         "tags": ["Orders"],
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
+        "security": [{ "ApiKeyAuth": [] }],
         "parameters": [
-          {
-            "name": "oid",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
+          { "name": "page", "in": "path", "required": true, "schema": { "type": "integer", "default": 1 } },
+          { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 10 } },
+          { "name": "searchKey", "in": "query", "required": false, "schema": { "type": "string" } },
+          { "name": "searchValue", "in": "query", "required": false, "schema": { "type": "string" } },
+          { "name": "sortIn", "in": "query", "required": false, "schema": { "type": "string", "enum": ["asc", "desc"], "default": "desc" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "string" },
+                    "message": { "type": "string" },
+                    "data": { "type": "array", "items": { "type": "object" } },
+                    "page": { "type": "integer" },
+                    "records": { "type": "integer" },
+                    "count": { "type": "integer" }
+                  }
+                }
+              }
+            }
           }
+        }
+      }
+    },
+    "/orders/{oid}": {
+      "get": {
+        "summary": "Get order details by order ID",
+        "tags": ["Orders"],
+        "security": [{ "ApiKeyAuth": [] }],
+        "parameters": [
+          { "name": "oid", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
           "200": {
@@ -160,58 +87,16 @@
                 }
               }
             }
-          }
-        }
-      },
-      "post": {
-        "summary": "Submit a new order",
-        "tags": ["Orders"],
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "type": "object" }
-            }
-          }
-        },
-        "responses": {
-          "202": {
-            "description": "Order submitted successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": { "type": "string" },
-                    "message": { "type": "string" },
-                    "data": { "type": "object" }
-                  }
-                }
-              }
-            }
-          }
+          },
+          "404": { "description": "Order not found" }
         }
       },
       "patch": {
-        "summary": "Edit an existing order",
+        "summary": "Update an existing order",
         "tags": ["Orders"],
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
+        "security": [{ "ApiKeyAuth": [] }],
         "parameters": [
-          {
-            "name": "oid",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "oid", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "requestBody": {
           "required": true,
@@ -237,6 +122,100 @@
               }
             }
           }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "summary": "Create a new order",
+        "tags": ["Orders"],
+        "security": [{ "ApiKeyAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object" }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Order created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "string" },
+                    "message": { "type": "string" },
+                    "data": { "type": "object" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{page}/{records}": {
+      "get": {
+        "summary": "Get paginated list of products",
+        "tags": ["Products"],
+        "security": [{ "ApiKeyAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "path", "required": true, "schema": { "type": "integer", "default": 1 } },
+          { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 10 } },
+          { "name": "searchKey", "in": "query", "required": false, "schema": { "type": "string" } },
+          { "name": "searchValue", "in": "query", "required": false, "schema": { "type": "string" } },
+          { "name": "sortIn", "in": "query", "required": false, "schema": { "type": "string", "enum": ["asc", "desc"], "default": "desc" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "string" },
+                    "message": { "type": "string" },
+                    "data": { "type": "array", "items": { "type": "object" } },
+                    "page": { "type": "integer" },
+                    "records": { "type": "integer" },
+                    "count": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{pid}": {
+      "get": {
+        "summary": "Get product details by product ID",
+        "tags": ["Products"],
+        "security": [{ "ApiKeyAuth": [] }],
+        "parameters": [
+          { "name": "pid", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "string" },
+                    "message": { "type": "string" },
+                    "data": { "type": "object" }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "Product not found" }
         }
       }
     }
