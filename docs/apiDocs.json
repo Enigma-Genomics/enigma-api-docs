@@ -24,7 +24,7 @@
       }
     },
     "schemas": {
-        "OrderCreate": {
+        "CreateOrder": {
             "type": "object",
             "properties": {
                 "product_details": {
@@ -127,7 +127,7 @@
             },
             "required": ["product_details", "patient_details", "primary_contact_details", "shipping_details", "coupon"]
         },
-        "OrderUpdate": {
+        "UpdateOrder": {
             "type": "object",
         "properties": {
             "patient_details": {
@@ -330,7 +330,7 @@
             "required": true,
             "content": {
                 "application/json": {
-                "schema": { "$ref": "#/components/schemas/OrderUpdate" }
+                "schema": { "$ref": "#/components/schemas/UpdateOrder" }
                 }
             }
             },
@@ -363,7 +363,7 @@
             "required": true,
             "content": {
                 "application/json": {
-                "schema": { "$ref": "#/components/schemas/OrderCreate" }
+                "schema": { "$ref": "#/components/schemas/CreateOrder" }
                 }
             }
             },
@@ -394,7 +394,7 @@
             "security": [{ "ApiKeyAuth": [] }],
             "parameters": [
             { "name": "page", "in": "path", "required": true, "schema": { "type": "integer", "default": 1 } },
-            { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 10 } },
+            { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 5 } },
             { "name": "searchKey", "in": "query", "required": false, "schema": { "type": "string" } },
             { "name": "searchValue", "in": "query", "required": false, "schema": { "type": "string" } },
             { "name": "sortIn", "in": "query", "required": false, "schema": { "type": "string", "enum": ["asc", "desc"], "default": "desc" } }
@@ -422,13 +422,13 @@
         }
     },
 
-    "/products/{pid}": {
+    "/products/{pcode}": {
         "get": {
-            "summary": "Get product details by product ID",
+            "summary": "Get product details by product code",
             "tags": ["Products"],
             "security": [{ "ApiKeyAuth": [] }],
             "parameters": [
-            { "name": "pid", "in": "path", "required": true, "schema": { "type": "string" } }
+            { "name": "pcode", "in": "path", "required": true, "schema": { "type": "string" } }
             ],
             "responses": {
             "200": {
@@ -458,7 +458,7 @@
             "security": [{ "ApiKeyAuth": [] }],
             "parameters": [
             { "name": "page", "in": "path", "required": true, "schema": { "type": "integer", "default": 1 } },
-            { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 10 } },
+            { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 5 } },
             { "name": "searchKey", "in": "query", "required": false, "schema": { "type": "string" } },
             { "name": "searchValue", "in": "query", "required": false, "schema": { "type": "string" } },
             { "name": "sortIn", "in": "query", "required": false, "schema": { "type": "string", "enum": ["asc", "desc"], "default": "desc" } }
