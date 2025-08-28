@@ -22,6 +22,199 @@
         "in": "header",
         "name": "x-api-key"
       }
+    },
+    "schemas": {
+        "OrderCreate": {
+            "type": "object",
+            "properties": {
+                "product_details": {
+                "type": "object",
+                "properties": {
+                    "code": { "type": "string", "minLength": 4 }
+                },
+                "required": ["code"]
+                },
+                "patient_details": {
+                "type": "object",
+                "properties": {
+                    "mrn": { "type": "string" },
+                    "is_fetus_sample": { "type": "string", "enum": ["yes", "no"] },
+                    "nationality": { "type": "string" },
+                    "ethnicity": { "type": "string" },
+                    "dob": { "type": "string" },
+                    "age": { "type": "string" },
+                    "gender": { "type": "string" },
+                    "fname": { "type": "string" },
+                    "lname": { "type": "string" },
+                    "countryCode": { "type": "string" },
+                    "country": { "type": "string" },
+                    "tel": { "type": "string" },
+                    "email": { "type": "string" },
+                    "natid": { "type": "string" },
+                    "sample_type": { "type": "string" },
+                    "sample_collection_date": { "type": "string" },
+                    "sample_collection_time": { "type": "string" },
+                    "sample_count": { "type": "string" },
+                    "indication": { "type": "string" },
+                    "additional_indication": { "type": "string" },
+                    "body_height": { "type": "string" },
+                    "body_weight": { "type": "string" },
+                    "secondary_findings": { "type": "string" },
+                    "history_personal": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                        "id": { "type": "string" },
+                        "age_of_manifestation": { "type": "string" }
+                        },
+                        "required": ["id", "age_of_manifestation"]
+                    }
+                    },
+                    "parents_related": { "type": "string", "enum": ["yes", "no", "notsure"] },
+                    "parents_first_cousin": { "type": "string", "enum": ["yes", "no", "notsure"] },
+                    "history_family": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                        "id": { "type": "string" },
+                        "age_of_manifestation": { "type": "string" }
+                        },
+                        "required": ["id", "age_of_manifestation"]
+                    }
+                    }
+                },
+                "required": [
+                    "mrn", "is_fetus_sample", "nationality", "ethnicity", "dob", "age", "gender", "fname", "lname",
+                    "countryCode", "country", "tel", "email", "natid", "sample_type", "sample_collection_date",
+                    "sample_collection_time", "sample_count", "indication", "additional_indication", "body_height",
+                    "body_weight", "secondary_findings", "history_personal", "parents_related", "parents_first_cousin", "history_family"
+                ]
+                },
+                "primary_contact_details": {
+                "type": "object",
+                "properties": {
+                    "fname": { "type": "string" },
+                    "lname": { "type": "string" },
+                    "countryCode": { "type": "string" },
+                    "country": { "type": "string" },
+                    "tel": { "type": "string" },
+                    "email": { "type": "string" }
+                },
+                "required": ["fname", "lname", "countryCode", "country", "tel", "email"]
+                },
+                "shipping_details": {
+                "type": "object",
+                "properties": {
+                    "ship_to": { "type": "string" },
+                    "ship_country": { "type": "string" },
+                    "ship_state": { "type": "string" },
+                    "ship_locality": { "type": "string" },
+                    "ship_areacode": { "type": "string" },
+                    "ship_lat": { "type": "string" },
+                    "ship_lng": { "type": "string" }
+                },
+                "required": ["ship_to", "ship_country", "ship_state", "ship_locality", "ship_areacode", "ship_lat", "ship_lng"]
+                },
+                "coupon": {
+                "type": "object",
+                "properties": {
+                    "code": { "type": "string", "minLength": 4 }
+                },
+                "required": ["code"]
+                }
+            },
+            "required": ["product_details", "patient_details", "primary_contact_details", "shipping_details", "coupon"]
+        },
+        "OrderUpdate": {
+            "type": "object",
+        "properties": {
+            "patient_details": {
+            "type": "object",
+            "properties": {
+                "mrn": { "type": "string" },
+                "is_fetus_sample": { "type": "string", "enum": ["yes", "no"] },
+                "nationality": { "type": "string" },
+                "ethnicity": { "type": "string" },
+                "dob": { "type": "string" },
+                "age": { "type": "string" },
+                "gender": { "type": "string" },
+                "fname": { "type": "string" },
+                "lname": { "type": "string" },
+                "countryCode": { "type": "string" },
+                "country": { "type": "string" },
+                "tel": { "type": "string" },
+                "email": { "type": "string" },
+                "sample_type": { "type": "string" },
+                "sample_collection_date": { "type": "string" },
+                "sample_collection_time": { "type": "string" },
+                "sample_count": { "type": "string" },
+                "indication": { "type": "string" },
+                "additional_indication": { "type": "string" },
+                "body_height": { "type": "string" },
+                "body_weight": { "type": "string" },
+                "secondary_findings": { "type": "string" },
+                "history_personal": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                    "id": { "type": "string" },
+                    "age_of_manifestation": { "type": "string" }
+                    },
+                    "required": ["id", "age_of_manifestation"]
+                }
+                },
+                "parents_related": { "type": "string", "enum": ["yes", "no", "notsure"] },
+                "parents_first_cousin": { "type": "string", "enum": ["yes", "no", "notsure"] },
+                "history_family": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                    "id": { "type": "string" },
+                    "age_of_manifestation": { "type": "string" }
+                    },
+                    "required": ["id", "age_of_manifestation"]
+                }
+                }
+            },
+            "required": [
+                "mrn", "is_fetus_sample", "nationality", "ethnicity", "dob", "age", "gender", "fname", "lname",
+                "countryCode", "country", "tel", "email", "sample_type", "sample_collection_date",
+                "sample_collection_time", "sample_count", "indication", "additional_indication", "body_height",
+                "body_weight", "secondary_findings", "history_personal", "parents_related", "parents_first_cousin", "history_family"
+            ]
+            },
+            "primary_contact_details": {
+            "type": "object",
+            "properties": {
+                "fname": { "type": "string" },
+                "lname": { "type": "string" },
+                "countryCode": { "type": "string" },
+                "country": { "type": "string" },
+                "tel": { "type": "string" },
+                "email": { "type": "string" }
+            },
+            "required": ["fname", "lname", "countryCode", "country", "tel", "email"]
+            },
+            "shipping_details": {
+            "type": "object",
+            "properties": {
+                "ship_to": { "type": "string" },
+                "ship_country": { "type": "string" },
+                "ship_state": { "type": "string" },
+                "ship_locality": { "type": "string" },
+                "ship_areacode": { "type": "string" },
+                "ship_lat": { "type": "string" },
+                "ship_lng": { "type": "string" }
+            },
+            "required": ["ship_to", "ship_country", "ship_state", "ship_locality", "ship_areacode", "ship_lat", "ship_lng"]
+            }
+        },
+        "required": ["patient_details", "primary_contact_details", "shipping_details"]
+        }
     }
   },
   "security": [
@@ -30,194 +223,297 @@
     }
   ],
   "paths": {
+    "/orders/{oid}/payment-link": {
+        "get": {
+            "summary": "Get payment link for an order",
+            "tags": ["Orders"],
+            "security": [{ "ApiKeyAuth": [] }],
+            "parameters": [
+            {
+                "name": "oid",
+                "in": "path",
+                "required": true,
+                "schema": { "type": "string" }
+            }
+            ],
+            "responses": {
+            "200": {
+                "description": "Payment link generated",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "code": { "type": "string" },
+                        "message": { "type": "string" },
+                        "paymentLink": { "type": "string" }
+                    }
+                    }
+                }
+                }
+            },
+            "404": { "description": "Order not found" }
+            }
+        }
+    },
+
     "/orders/{page}/{records}": {
-      "get": {
-        "summary": "Get paginated list of orders",
-        "tags": ["Orders"],
-        "security": [{ "ApiKeyAuth": [] }],
-        "parameters": [
-          { "name": "page", "in": "path", "required": true, "schema": { "type": "integer", "default": 1 } },
-          { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 10 } },
-          { "name": "searchKey", "in": "query", "required": false, "schema": { "type": "string" } },
-          { "name": "searchValue", "in": "query", "required": false, "schema": { "type": "string" } },
-          { "name": "sortIn", "in": "query", "required": false, "schema": { "type": "string", "enum": ["asc", "desc"], "default": "desc" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of orders",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": { "type": "string" },
-                    "message": { "type": "string" },
-                    "data": { "type": "array", "items": { "type": "object" } },
-                    "page": { "type": "integer" },
-                    "records": { "type": "integer" },
-                    "count": { "type": "integer" }
-                  }
+        "get": {
+            "summary": "Get paginated list of orders",
+            "tags": ["Orders"],
+            "security": [{ "ApiKeyAuth": [] }],
+            "parameters": [
+            { "name": "page", "in": "path", "required": true, "schema": { "type": "integer", "default": 1 } },
+            { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 10 } },
+            { "name": "searchKey", "in": "query", "required": false, "schema": { "type": "string" } },
+            { "name": "searchValue", "in": "query", "required": false, "schema": { "type": "string" } },
+            { "name": "sortIn", "in": "query", "required": false, "schema": { "type": "string", "enum": ["asc", "desc"], "default": "desc" } }
+            ],
+            "responses": {
+            "200": {
+                "description": "List of orders",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "code": { "type": "string" },
+                        "message": { "type": "string" },
+                        "data": { "type": "array", "items": { "type": "object" } },
+                        "page": { "type": "integer" },
+                        "records": { "type": "integer" },
+                        "count": { "type": "integer" }
+                    }
+                    }
                 }
-              }
+                }
             }
-          }
+            }
         }
-      }
     },
+
     "/orders/{oid}": {
-      "get": {
-        "summary": "Get order details by order ID",
-        "tags": ["Orders"],
-        "security": [{ "ApiKeyAuth": [] }],
-        "parameters": [
-          { "name": "oid", "in": "path", "required": true, "schema": { "type": "string" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "Order details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": { "type": "string" },
-                    "message": { "type": "string" },
-                    "data": { "type": "object" }
-                  }
+        "get": {
+            "summary": "Get order details by order ID",
+            "tags": ["Orders"],
+            "security": [{ "ApiKeyAuth": [] }],
+            "parameters": [
+            { "name": "oid", "in": "path", "required": true, "schema": { "type": "string" } }
+            ],
+            "responses": {
+            "200": {
+                "description": "Order details",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "code": { "type": "string" },
+                        "message": { "type": "string" },
+                        "data": { "type": "object" }
+                    }
+                    }
                 }
-              }
+                }
+            },
+            "404": { "description": "Order not found" }
             }
-          },
-          "404": { "description": "Order not found" }
-        }
-      },
-      "patch": {
-        "summary": "Update an existing order",
-        "tags": ["Orders"],
-        "security": [{ "ApiKeyAuth": [] }],
-        "parameters": [
-          { "name": "oid", "in": "path", "required": true, "schema": { "type": "string" } }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "type": "object" }
-            }
-          }
         },
-        "responses": {
-          "202": {
-            "description": "Order updated successfully",
+        "patch": {
+            "summary": "Update an existing order",
+            "tags": ["Orders"],
+            "security": [{ "ApiKeyAuth": [] }],
+            "parameters": [
+            { "name": "oid", "in": "path", "required": true, "schema": { "type": "string" } }
+            ],
+            "requestBody": {
+            "required": true,
             "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": { "type": "string" },
-                    "message": { "type": "string" },
-                    "data": { "type": "object" }
-                  }
+                "application/json": {
+                "schema": { "$ref": "#/components/schemas/OrderUpdate" }
                 }
-              }
             }
-          }
+            },
+            "responses": {
+            "202": {
+                "description": "Order updated successfully",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "code": { "type": "string" },
+                        "message": { "type": "string" },
+                        "data": { "type": "object" }
+                    }
+                    }
+                }
+                }
+            }
+            }
         }
-      }
     },
+
     "/orders": {
-      "post": {
-        "summary": "Create a new order",
-        "tags": ["Orders"],
-        "security": [{ "ApiKeyAuth": [] }],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "type": "object" }
-            }
-          }
-        },
-        "responses": {
-          "202": {
-            "description": "Order created successfully",
+        "post": {
+            "summary": "Create a new order",
+            "tags": ["Orders"],
+            "security": [{ "ApiKeyAuth": [] }],
+            "requestBody": {
+            "required": true,
             "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": { "type": "string" },
-                    "message": { "type": "string" },
-                    "data": { "type": "object" }
-                  }
+                "application/json": {
+                "schema": { "$ref": "#/components/schemas/OrderCreate" }
                 }
-              }
             }
-          }
+            },
+            "responses": {
+            "202": {
+                "description": "Order created successfully",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "code": { "type": "string" },
+                        "message": { "type": "string" },
+                        "data": { "type": "object" }
+                    }
+                    }
+                }
+                }
+            }
+            }
         }
-      }
     },
+
     "/products/{page}/{records}": {
-      "get": {
-        "summary": "Get paginated list of products",
-        "tags": ["Products"],
-        "security": [{ "ApiKeyAuth": [] }],
-        "parameters": [
-          { "name": "page", "in": "path", "required": true, "schema": { "type": "integer", "default": 1 } },
-          { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 10 } },
-          { "name": "searchKey", "in": "query", "required": false, "schema": { "type": "string" } },
-          { "name": "searchValue", "in": "query", "required": false, "schema": { "type": "string" } },
-          { "name": "sortIn", "in": "query", "required": false, "schema": { "type": "string", "enum": ["asc", "desc"], "default": "desc" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of products",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": { "type": "string" },
-                    "message": { "type": "string" },
-                    "data": { "type": "array", "items": { "type": "object" } },
-                    "page": { "type": "integer" },
-                    "records": { "type": "integer" },
-                    "count": { "type": "integer" }
-                  }
+        "get": {
+            "summary": "Get paginated list of products",
+            "tags": ["Products"],
+            "security": [{ "ApiKeyAuth": [] }],
+            "parameters": [
+            { "name": "page", "in": "path", "required": true, "schema": { "type": "integer", "default": 1 } },
+            { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 10 } },
+            { "name": "searchKey", "in": "query", "required": false, "schema": { "type": "string" } },
+            { "name": "searchValue", "in": "query", "required": false, "schema": { "type": "string" } },
+            { "name": "sortIn", "in": "query", "required": false, "schema": { "type": "string", "enum": ["asc", "desc"], "default": "desc" } }
+            ],
+            "responses": {
+            "200": {
+                "description": "List of products",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "code": { "type": "string" },
+                        "message": { "type": "string" },
+                        "data": { "type": "array", "items": { "type": "object" } },
+                        "page": { "type": "integer" },
+                        "records": { "type": "integer" },
+                        "count": { "type": "integer" }
+                    }
+                    }
                 }
-              }
+                }
             }
-          }
+            }
         }
-      }
     },
+
     "/products/{pid}": {
-      "get": {
-        "summary": "Get product details by product ID",
-        "tags": ["Products"],
-        "security": [{ "ApiKeyAuth": [] }],
-        "parameters": [
-          { "name": "pid", "in": "path", "required": true, "schema": { "type": "string" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "Product details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": { "type": "string" },
-                    "message": { "type": "string" },
-                    "data": { "type": "object" }
-                  }
+        "get": {
+            "summary": "Get product details by product ID",
+            "tags": ["Products"],
+            "security": [{ "ApiKeyAuth": [] }],
+            "parameters": [
+            { "name": "pid", "in": "path", "required": true, "schema": { "type": "string" } }
+            ],
+            "responses": {
+            "200": {
+                "description": "Product details",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "code": { "type": "string" },
+                        "message": { "type": "string" },
+                        "data": { "type": "object" }
+                    }
+                    }
                 }
-              }
+                }
+            },
+            "404": { "description": "Product not found" }
             }
-          },
-          "404": { "description": "Product not found" }
         }
-      }
+    },
+
+    "/coupons": {
+        "get": {
+            "summary": "Get all coupons for the current user",
+            "tags": ["Coupons"],
+            "security": [{ "ApiKeyAuth": [] }],
+            "responses": {
+            "200": {
+                "description": "List of coupons",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "coupons": {
+                        "type": "array",
+                        "items": { "type": "object" }
+                        },
+                        "count": { "type": "integer" }
+                    }
+                    }
+                }
+                }
+            }
+            }
+        }
+    },
+
+    "/coupons/{cid}": {
+        "get": {
+            "summary": "Get coupon details by coupon ID",
+            "tags": ["Coupons"],
+            "security": [{ "ApiKeyAuth": [] }],
+            "parameters": [
+            {
+                "name": "cid",
+                "in": "path",
+                "required": true,
+                "schema": { "type": "string" }
+            }
+            ],
+            "responses": {
+            "200": {
+                "description": "Coupon details",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "couponID": { "type": "string" },
+                        "couponCode": { "type": "string" },
+                        "commisionType": { "type": "string" },
+                        "commisionValue": { "type": "number" },
+                        "discountType": { "type": "string" },
+                        "discountValue": { "type": "number" },
+                        "validTill": { "type": "string" }
+                    }
+                    }
+                }
+                }
+            },
+            "404": { "description": "Coupon not found" }
+            }
+        }
     }
   }
 }
