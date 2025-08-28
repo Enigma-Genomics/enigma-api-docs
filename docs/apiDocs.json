@@ -451,11 +451,18 @@
         }
     },
 
-    "/coupons": {
+    "/coupons/{page}/{records}": {
         "get": {
             "summary": "Get all coupons for the current user",
             "tags": ["Coupons"],
             "security": [{ "ApiKeyAuth": [] }],
+            "parameters": [
+            { "name": "page", "in": "path", "required": true, "schema": { "type": "integer", "default": 1 } },
+            { "name": "records", "in": "path", "required": true, "schema": { "type": "integer", "default": 10 } },
+            { "name": "searchKey", "in": "query", "required": false, "schema": { "type": "string" } },
+            { "name": "searchValue", "in": "query", "required": false, "schema": { "type": "string" } },
+            { "name": "sortIn", "in": "query", "required": false, "schema": { "type": "string", "enum": ["asc", "desc"], "default": "desc" } }
+            ],
             "responses": {
             "200": {
                 "description": "List of coupons",
@@ -464,12 +471,13 @@
                     "schema": {
                     "type": "object",
                     "properties": {
-                        "coupons": {
-                        "type": "array",
-                        "items": { "type": "object" }
-                        },
+                        "code": { "type": "string" },
+                        "message": { "type": "string" },
+                        "data": { "type": "array", "items": { "type": "object" } },
+                        "page": { "type": "integer" },
+                        "records": { "type": "integer" },
                         "count": { "type": "integer" }
-                    }
+                        }
                     }
                 }
                 }
