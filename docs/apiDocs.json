@@ -37,38 +37,37 @@
                 "patient_details": {
                 "type": "object",
                 "properties": {
-                    "mrn": { "type": "string" },
+                    "mrn": { "type": "string", "minLength": 1 },
                     "is_fetus_sample": { "type": "string", "enum": ["yes", "no"] },
+                    "dob": { "type": "string", "minLength": 1 },
+                    "age": { "type": "string", "minLength": 1 },
+                    "gender": { "type": "string", "minLength": 1 },
+                    "fname": { "type": "string", "minLength": 2, "pattern": "^[a-zA-Z\\s]*$" },
+                    "lname": { "type": "string", "minLength": 2, "pattern": "^[a-zA-Z\\s]*$" },
                     "nationality": { "type": "string" },
                     "ethnicity": { "type": "string" },
-                    "dob": { "type": "string" },
-                    "age": { "type": "string" },
-                    "gender": { "type": "string" },
-                    "fname": { "type": "string" },
-                    "lname": { "type": "string" },
                     "countryCode": { "type": "string" },
                     "country": { "type": "string" },
-                    "tel": { "type": "string" },
+                    "tel": { "type": "string", "minLength": 1 },
                     "email": { "type": "string" },
-                    "natid": { "type": "string" },
-                    "sample_type": { "type": "string" },
-                    "sample_collection_date": { "type": "string" },
-                    "sample_collection_time": { "type": "string" },
-                    "sample_count": { "type": "string" },
+                    "natid": { "type": "string", "minLength": 1 },
+                    "sample_type": { "type": "string", "minLength": 1 },
+                    "sample_collection_date": { "type": "string", "minLength": 1 },
+                    "sample_collection_time": { "type": "string", "minLength": 1 },
+                    "sample_count": { "type": "string", "minLength": 1 },
                     "indication": { "type": "string" },
                     "additional_indication": { "type": "string" },
-                    "body_height": { "type": "string" },
-                    "body_weight": { "type": "string" },
-                    "secondary_findings": { "type": "string" },
+                    "body_height": { "type": "string", "minLength": 1 },
+                    "body_weight": { "type": "string", "minLength": 1 },
+                    "secondary_findings": { "type": "string", "minLength": 1 },
                     "history_personal": {
                     "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
-                        "id": { "type": "string" },
-                        "age_of_manifestation": { "type": "string" }
-                        },
-                        "required": ["id", "age_of_manifestation"]
+                        "id": { "type": "string", "minLength": 1 },
+                        "age_of_manifestation": { "type": "string", "minLength": 1 }
+                        }
                     }
                     },
                     "parents_related": { "type": "string", "enum": ["yes", "no", "notsure"] },
@@ -78,19 +77,12 @@
                     "items": {
                         "type": "object",
                         "properties": {
-                        "id": { "type": "string" },
+                        "id": { "type": "string", "minLength": 1 },
                         "age_of_manifestation": { "type": "string" }
-                        },
-                        "required": ["id", "age_of_manifestation"]
+                        }
                     }
                     }
-                },
-                "required": [
-                    "mrn", "is_fetus_sample", "nationality", "ethnicity", "dob", "age", "gender", "fname", "lname",
-                    "countryCode", "country", "tel", "email", "natid", "sample_type", "sample_collection_date",
-                    "sample_collection_time", "sample_count", "indication", "additional_indication", "body_height",
-                    "body_weight", "secondary_findings", "history_personal", "parents_related", "parents_first_cousin", "history_family"
-                ]
+                }
                 },
                 "primary_contact_details": {
                 "type": "object",
@@ -101,8 +93,7 @@
                     "country": { "type": "string" },
                     "tel": { "type": "string" },
                     "email": { "type": "string" }
-                },
-                "required": ["fname", "lname", "countryCode", "country", "tel", "email"]
+                }
                 },
                 "shipping_details": {
                 "type": "object",
@@ -114,106 +105,105 @@
                     "ship_areacode": { "type": "string" },
                     "ship_lat": { "type": "string" },
                     "ship_lng": { "type": "string" }
-                },
-                "required": ["ship_to", "ship_country", "ship_state", "ship_locality", "ship_areacode", "ship_lat", "ship_lng"]
+                }
                 },
                 "coupon": {
                 "type": "object",
                 "properties": {
                     "code": { "type": "string", "minLength": 4 }
-                },
-                "required": ["code"]
                 }
-            },
-            "required": ["product_details", "patient_details", "primary_contact_details", "shipping_details", "coupon"]
+                }
+            }
         },
         "UpdateOrder": {
             "type": "object",
-        "properties": {
-            "patient_details": {
-            "type": "object",
             "properties": {
-                "mrn": { "type": "string" },
-                "is_fetus_sample": { "type": "string", "enum": ["yes", "no"] },
-                "nationality": { "type": "string" },
-                "ethnicity": { "type": "string" },
-                "dob": { "type": "string" },
-                "age": { "type": "string" },
-                "gender": { "type": "string" },
-                "fname": { "type": "string" },
-                "lname": { "type": "string" },
-                "countryCode": { "type": "string" },
-                "country": { "type": "string" },
-                "tel": { "type": "string" },
-                "email": { "type": "string" },
-                "sample_type": { "type": "string" },
-                "sample_collection_date": { "type": "string" },
-                "sample_collection_time": { "type": "string" },
-                "sample_count": { "type": "string" },
-                "indication": { "type": "string" },
-                "additional_indication": { "type": "string" },
-                "body_height": { "type": "string" },
-                "body_weight": { "type": "string" },
-                "secondary_findings": { "type": "string" },
-                "history_personal": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                    "id": { "type": "string" },
-                    "age_of_manifestation": { "type": "string" }
+                "patient_details": {
+                "type": "object",
+                "properties": {
+                    "mrn": { "type": "string", "minLength": 1 },
+                    "is_fetus_sample": { "type": "string", "enum": ["yes", "no"] },
+                    "nationality": { "type": "string" },
+                    "ethnicity": { "type": "string" },
+                    "countryCode": { "type": "string" },
+                    "country": { "type": "string" },
+                    "dob": { "type": "string", "minLength": 1 },
+                    "age": { "type": "string", "minLength": 1 },
+                    "gender": { "type": "string", "minLength": 1 },
+                    "fname": { "type": "string", "minLength": 1 },
+                    "lname": { "type": "string", "minLength": 1 },
+                    "tel": { "type": "string", "minLength": 1 },
+                    "email": { "type": "string", "minLength": 1 },
+                    "sample_type": { "type": "string", "minLength": 1 },
+                    "sample_collection_date": { "type": "string", "minLength": 1 },
+                    "sample_collection_time": { "type": "string", "minLength": 1 },
+                    "sample_count": { "type": "string", "minLength": 1 },
+                    "indication": { "type": "string", "minLength": 1 },
+                    "additional_indication": { "type": "string", "minLength": 1 },
+                    "body_height": { "type": "string", "minLength": 1 },
+                    "body_weight": { "type": "string", "minLength": 1 },
+                    "secondary_findings": { "type": "string", "minLength": 1 },
+                    "history_personal": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                        "id": { "type": "string", "minLength": 1 },
+                        "age_of_manifestation": { "type": "string", "minLength": 1 }
+                        },
+                        "required": ["id", "age_of_manifestation"]
+                    }
                     },
-                    "required": ["id", "age_of_manifestation"]
-                }
+                    "parents_related": { "type": "string", "enum": ["yes", "no", "notsure"] },
+                    "parents_first_cousin": { "type": "string", "enum": ["yes", "no", "notsure"] },
+                    "history_family": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                        "id": { "type": "string", "minLength": 1 },
+                        "age_of_manifestation": { "type": "string", "minLength": 1 }
+                        },
+                        "required": ["id", "age_of_manifestation"]
+                    }
+                    }
                 },
-                "parents_related": { "type": "string", "enum": ["yes", "no", "notsure"] },
-                "parents_first_cousin": { "type": "string", "enum": ["yes", "no", "notsure"] },
-                "history_family": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                    "id": { "type": "string" },
-                    "age_of_manifestation": { "type": "string" }
-                    },
-                    "required": ["id", "age_of_manifestation"]
+                "required": [
+                    "mrn", "is_fetus_sample", "nationality", "dob", "age", "gender", "fname", "lname",
+                    "countryCode", "country", "tel", "email", "sample_type", "sample_collection_date",
+                    "sample_collection_time", "sample_count", "indication", "additional_indication", "body_height",
+                    "body_weight", "secondary_findings", "history_personal", "parents_related", "parents_first_cousin", "history_family"
+                ]
+                },
+                "primary_contact_details": {
+                "type": "object",
+                "properties": {
+                    "fname": { "type": "string", "minLength": 1 },
+                    "lname": { "type": "string", "minLength": 1 },
+                    "countryCode": { "type": "string", "minLength": 1 },
+                    "country": { "type": "string", "minLength": 1 },
+                    "tel": { "type": "string", "minLength": 1 },
+                    "email": { "type": "string", "minLength": 1 }
+                },
+                "required": ["fname", "lname", "countryCode", "country", "tel", "email"]
+                },
+                "shipping_details": {
+                "type": "object",
+                "properties": {
+                    "ship_to": { "type": "string", "minLength": 1 },
+                    "ship_country": { "type": "string", "minLength": 1 },
+                    "ship_state": { "type": "string", "minLength": 1 },
+                    "ship_locality": { "type": "string", "minLength": 1 },
+                    "ship_areacode": { "type": "string", "minLength": 1 },
+                    "ship_lat": { "type": "string", "minLength": 1 },
+                    "ship_lng": { "type": "string", "minLength": 1 }
+                },
+                "required": [
+                    "ship_to", "ship_country", "ship_state", "ship_locality", "ship_areacode", "ship_lat", "ship_lng"
+                ]
                 }
-                }
             },
-            "required": [
-                "mrn", "is_fetus_sample", "nationality", "ethnicity", "dob", "age", "gender", "fname", "lname",
-                "countryCode", "country", "tel", "email", "sample_type", "sample_collection_date",
-                "sample_collection_time", "sample_count", "indication", "additional_indication", "body_height",
-                "body_weight", "secondary_findings", "history_personal", "parents_related", "parents_first_cousin", "history_family"
-            ]
-            },
-            "primary_contact_details": {
-            "type": "object",
-            "properties": {
-                "fname": { "type": "string" },
-                "lname": { "type": "string" },
-                "countryCode": { "type": "string" },
-                "country": { "type": "string" },
-                "tel": { "type": "string" },
-                "email": { "type": "string" }
-            },
-            "required": ["fname", "lname", "countryCode", "country", "tel", "email"]
-            },
-            "shipping_details": {
-            "type": "object",
-            "properties": {
-                "ship_to": { "type": "string" },
-                "ship_country": { "type": "string" },
-                "ship_state": { "type": "string" },
-                "ship_locality": { "type": "string" },
-                "ship_areacode": { "type": "string" },
-                "ship_lat": { "type": "string" },
-                "ship_lng": { "type": "string" }
-            },
-            "required": ["ship_to", "ship_country", "ship_state", "ship_locality", "ship_areacode", "ship_lat", "ship_lng"]
-            }
-        },
-        "required": ["patient_details", "primary_contact_details", "shipping_details"]
+            "required": ["patient_details", "primary_contact_details", "shipping_details"]
         }
     }
   },
