@@ -7,12 +7,12 @@
   },
   "servers": [
     {
-      "url": "https://api.enigmagenomics.com/us-central1/v3external",
+      "url": "https://api.enigmagenomics.com/",
       "description": "Production server"
     },
     {
-      "url": "http://localhost:5001/enigmagenomics/us-central1/v3external",
-      "description": "Local emulator"
+        "url": "https://api-test.enigmagenomics.com/",
+        "description": "Test server"
     }
   ],
   "components": {
@@ -30,7 +30,12 @@
                 "product_details": {
                 "type": "object",
                 "properties": {
-                    "code": { "type": "string", "minLength": 4 }
+                    "code": { "type": "string", "minLength": 4 },
+                    "add_ons": {
+                        "type": "array",
+                        "items": { "type": "string", "minLength": 4 },
+                        "description": "Array of add-on product codes, each at least 4 characters long"
+                    }
                 },
                 "required": ["code"]
                 },
